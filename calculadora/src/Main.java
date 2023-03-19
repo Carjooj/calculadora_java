@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /*
@@ -10,8 +8,10 @@ frame01.add(panel02);
 */
 public class Main {
     public static void main(String[] args) {
-        Interface interface01 = new Interface();
         Botoes botoes = new Botoes();
+        botoes.criargui();
+
+
 
     }
 }

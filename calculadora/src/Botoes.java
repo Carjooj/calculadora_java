@@ -1,19 +1,73 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Botoes {
-    Interface interface01;
+public class Botoes extends Interface implements ActionListener {
+    String strdisplay;
+    int displayconvertido;
 
     String textoBotao(ActionEvent e){
         String texto = "";
         Object source = e.getSource();
-        if (source instanceof JButton) {
-            JButton botao = (JButton) source;
+        if (source instanceof JButton botao) {
             texto = botao.getText();
         }
         return texto;
     }
+
+      Botoes() {
+        MCButton.addActionListener(this);
+        MRButton.addActionListener(this);
+        MmButton.addActionListener(this);
+        MnButton.addActionListener(this);
+        MSButton.addActionListener(this);
+        MDButton.addActionListener(this);
+        porcentagemButton.addActionListener(this);
+        CEButton.addActionListener(this);
+        cButton.addActionListener(this);
+        DelButton.addActionListener(this);
+        a1xButton.addActionListener(this);
+        sqrButton.addActionListener(this);
+        raizButton.addActionListener(this);
+        divButton.addActionListener(this);
+        a7Button.addActionListener(this);
+        a8Button.addActionListener(this);
+        a9Button.addActionListener(this);
+        multiButton.addActionListener(this);
+        a4Button.addActionListener(this);
+        a5Button.addActionListener(this);
+        a6Button.addActionListener(this);
+        menosButton.addActionListener(this);
+        a1Button.addActionListener(this);
+        a2Button.addActionListener(this);
+        a3Button.addActionListener(this);
+        maisButton.addActionListener(this);
+        sinalButton.addActionListener(this);
+        a0Button.addActionListener(this);
+        virgulaButton.addActionListener(this);
+        igualButton.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!display.getText().equals(a0Button.getText())) {
+            display.setText(display.getText() + textoBotao(e));
+            if (textoBotao(e).equals(cButton.getText())) {
+                display.setText("0");
+            }
+            if (display.getText().equals(igualButton.getText())) {
+                strdisplay = display.getText();
+                displayconvertido = Integer.parseInt(strdisplay);
+                System.out.println(strdisplay);
+                System.out.println(displayconvertido);
+            }
+        }
+        else {
+            display.setText(textoBotao(e));
+        }
+    }
+
+
 /*
     JFrame frame01 = new JFrame("Calculadora");
 

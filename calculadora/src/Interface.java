@@ -1,7 +1,8 @@
 import javax.swing.*;
 
 public class Interface {
-    Interface() {
+
+    void criargui() {
         JFrame frame01 = new JFrame("Calculadora");
         frame01.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame01.setSize(500, 500);
@@ -11,9 +12,9 @@ public class Interface {
 
     JButton porcentagemButton;
     JButton cButton;
-    JButton DELButton;
+    JButton DelButton;
     JButton a1xButton;
-    JButton xButton;
+    JButton sqrButton;
     JButton raizButton;
     JButton divButton;
     JButton a7Button;
@@ -35,13 +36,14 @@ public class Interface {
     JButton MCButton;
     JButton MRButton;
     JButton mButton;
-    JButton mButton1;
+    JButton MnButton;
     JButton MSButton;
     JButton MDButton;
     JButton CEButton;
     JPanel panelExt;
     JPanel panelInt;
     JLabel display;
+    JButton MmButton;
 
     //
 
