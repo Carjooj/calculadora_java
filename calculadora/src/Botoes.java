@@ -55,11 +55,19 @@ public class Botoes extends Interface implements ActionListener {
             if (textoBotao(e).equals(cButton.getText())) {
                 display.setText("0");
             }
-            if (display.getText().equals(igualButton.getText())) {
+            if (textoBotao(e).equals(igualButton.getText())) {
+
+
+               /* int i = 0;
                 strdisplay = display.getText();
+                strdisplay = strdisplay.replace(igualButton.getText(), "");
                 displayconvertido = Integer.parseInt(strdisplay);
                 System.out.println(strdisplay);
                 System.out.println(displayconvertido);
+                i++;
+                codigo necessário para retirar o caractere "=" para poder converter a string.
+                Integer.parseInt não converte operadores (+, -. /, *) e realiza uma expressão
+                */
             }
         }
         else {
