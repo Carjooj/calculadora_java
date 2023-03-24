@@ -1,11 +1,13 @@
+
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.nfunk.jep.*;
 
 public class Botoes extends Interface implements ActionListener {
-    String strdisplay;
-    int displayconvertido;
-
+    JEP jep = new JEP();
+    String getdisplay;
     String textoBotao(ActionEvent e){
         String texto = "";
         Object source = e.getSource();
@@ -16,6 +18,8 @@ public class Botoes extends Interface implements ActionListener {
     }
 
       Botoes() {
+        jep.addStandardFunctions();
+        jep.addStandardConstants();
         MCButton.addActionListener(this);
         MRButton.addActionListener(this);
         MmButton.addActionListener(this);
@@ -50,28 +54,71 @@ public class Botoes extends Interface implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!display.getText().equals(a0Button.getText())) {
+        if (display.getText().equals(a0Button.getText())) {
+            if (textoBotao(e).equals(a1Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a2Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a3Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a4Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a5Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a6Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a7Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a8Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(a9Button.getText())) {
+                display.setText(textoBotao(e));
+
+            } else if (textoBotao(e).equals(virgulaButton.getText())) {
+                display.setText("0,");
+            } else {
+                display.setText("0");
+            }
+
+        }
+        else {
             display.setText(display.getText() + textoBotao(e));
             if (textoBotao(e).equals(cButton.getText())) {
                 display.setText("0");
             }
-            if (textoBotao(e).equals(igualButton.getText())) {
-
-
-               /* int i = 0;
-                strdisplay = display.getText();
-                strdisplay = strdisplay.replace(igualButton.getText(), "");
-                displayconvertido = Integer.parseInt(strdisplay);
-                System.out.println(strdisplay);
-                System.out.println(displayconvertido);
-                i++;
-                codigo necessário para retirar o caractere "=" para poder converter a string.
-                Integer.parseInt não converte operadores (+, -. /, *) e realiza uma expressão
-                */
+            if (textoBotao(e).equals(DelButton.getText())) {
+                display.setText(display.getText() + "");
             }
-        }
-        else {
-            display.setText(textoBotao(e));
+            if (textoBotao(e).equals(igualButton.getText())) {
+                getdisplay = display.getText();
+                getdisplay = getdisplay.replace(igualButton.getText(), "");
+                getdisplay = getdisplay.replace(menosButton.getText(), "-");
+                getdisplay = getdisplay.replace(multiButton.getText(), "*");
+                getdisplay = getdisplay.replace(divButton.getText(), "/");
+                getdisplay = getdisplay.replace(virgulaButton.getText(), ".");
+                jep.parseExpression(getdisplay);
+                if (jep.hasError()) {
+                    display.setText("Erro");
+                    System.out.println(jep.getErrorInfo());
+
+                }
+                else {
+                    System.out.println(jep.getValue());
+                    double resultado = jep.getValue();
+                    String strResul = Double.toString(resultado);
+                    strResul = strResul.replace(".", virgulaButton.getText());
+                    display.setText(strResul);
+                }
+            }
+
         }
     }
 
