@@ -1,11 +1,16 @@
-
-
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.math.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.nfunk.jep.*;
 
 public class Botoes extends Interface implements ActionListener {
+    String regex = "\\d+";
+
+    Pattern padrao = Pattern.compile(regex);
+    int i = 1;
     JEP jep = new JEP();
     String getdisplay;
     String textoBotao(ActionEvent e){
@@ -95,7 +100,14 @@ public class Botoes extends Interface implements ActionListener {
                 display.setText("0");
             }
             if (textoBotao(e).equals(DelButton.getText())) {
-                display.setText(display.getText() + "");
+                display.setText(display.getText().replace(DelButton.getText(), ""));
+                i = 1;
+                if (display.getText().isEmpty()) {
+                    i = 0;
+                    display.setText("0");
+                }
+                Matcher matcher = padrao.matcher(display.getText());
+                display.setText(display.getText().substring(0, display.getText().length() - i));
             }
             if (textoBotao(e).equals(igualButton.getText())) {
                 getdisplay = display.getText();
@@ -104,6 +116,7 @@ public class Botoes extends Interface implements ActionListener {
                 getdisplay = getdisplay.replace(multiButton.getText(), "*");
                 getdisplay = getdisplay.replace(divButton.getText(), "/");
                 getdisplay = getdisplay.replace(virgulaButton.getText(), ".");
+                System.out.println(getdisplay);
                 jep.parseExpression(getdisplay);
                 if (jep.hasError()) {
                     display.setText("Erro");
