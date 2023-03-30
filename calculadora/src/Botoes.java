@@ -116,6 +116,7 @@ public class Botoes extends Interface implements ActionListener {
                 getdisplay = getdisplay.replace(multiButton.getText(), "*");
                 getdisplay = getdisplay.replace(divButton.getText(), "/");
                 getdisplay = getdisplay.replace(virgulaButton.getText(), ".");
+                getdisplay = getdisplay.replace(porcentagemButton.getText(), "/100");
                 System.out.println(getdisplay);
                 jep.parseExpression(getdisplay);
                 if (jep.hasError()) {
