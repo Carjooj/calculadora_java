@@ -96,12 +96,21 @@ public class Botoes extends Interface implements ActionListener {
         }
         else {
             display.setText(display.getText() + textoBotao(e));
+            if (textoBotao(e).equals(raizButton.getText())) {
+                getdisplay = display.getText().replace(raizButton.getText(), "");
+                getdisplay = getdisplay.replace(getdisplay, "sqrt(" + getdisplay + ")");
+                display.setText(getdisplay);
+
+            }
             if (textoBotao(e).equals(cButton.getText())) {
                 display.setText("0");
             }
             if (textoBotao(e).equals(DelButton.getText())) {
                 display.setText(display.getText().replace(DelButton.getText(), ""));
                 i = 1;
+                if (display.getText().contains(getdisplay)) {
+                    display.setText("0");
+                }
                 if (display.getText().isEmpty()) {
                     i = 0;
                     display.setText("0");
@@ -117,8 +126,11 @@ public class Botoes extends Interface implements ActionListener {
                 getdisplay = getdisplay.replace(divButton.getText(), "/");
                 getdisplay = getdisplay.replace(virgulaButton.getText(), ".");
                 getdisplay = getdisplay.replace(porcentagemButton.getText(), "/100");
-                getdisplay = getdisplay.replace(a1xButton.getText(), "");
-                getdisplay = getdisplay.replace(getdisplay, "1/" + getdisplay);
+                if (getdisplay.contains(a1xButton.getText())) {
+                    getdisplay = getdisplay.replace(a1xButton.getText(), "");
+                    getdisplay = getdisplay.replace(getdisplay, "1/" + getdisplay);
+
+                }
                 System.out.println(getdisplay);
                 jep.parseExpression(getdisplay);
                 if (jep.hasError()) {
