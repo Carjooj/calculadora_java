@@ -59,7 +59,7 @@ public class Botoes extends Interface implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (display.getText().equals(a0Button.getText())) {
+        if (display.getText().equals(a0Button.getText()) || display.getText().equals("Erro")) {
             if (textoBotao(e).equals(a1Button.getText())) {
                 display.setText(textoBotao(e));
 
