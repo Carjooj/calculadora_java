@@ -1,6 +1,5 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.math.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +12,10 @@ public class Botoes extends Interface implements ActionListener {
     int i = 1;
     JEP jep = new JEP();
     String getdisplay;
+
+
+
+    String ultimo;
     String textoBotao(ActionEvent e){
         String texto = "";
         Object source = e.getSource();
@@ -36,7 +39,7 @@ public class Botoes extends Interface implements ActionListener {
         cButton.addActionListener(this);
         DelButton.addActionListener(this);
         a1xButton.addActionListener(this);
-        sqrButton.addActionListener(this);
+        powButton.addActionListener(this);
         raizButton.addActionListener(this);
         divButton.addActionListener(this);
         a7Button.addActionListener(this);
@@ -59,6 +62,7 @@ public class Botoes extends Interface implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String subgetdisplay = "";
         if (display.getText().equals(a0Button.getText()) || display.getText().equals("Erro")) {
             if (textoBotao(e).equals(a1Button.getText())) {
                 display.setText(textoBotao(e));
@@ -87,6 +91,9 @@ public class Botoes extends Interface implements ActionListener {
             } else if (textoBotao(e).equals(a9Button.getText())) {
                 display.setText(textoBotao(e));
 
+            } else if (textoBotao(e).equals(raizButton.getText())) {
+                display.setText("√");
+
             } else if (textoBotao(e).equals(virgulaButton.getText())) {
                 display.setText("0,");
             } else {
@@ -96,10 +103,30 @@ public class Botoes extends Interface implements ActionListener {
         }
         else {
             display.setText(display.getText() + textoBotao(e));
-            if (textoBotao(e).equals(raizButton.getText())) {
-                getdisplay = display.getText().replace(raizButton.getText(), "");
-                getdisplay = getdisplay.replace(getdisplay, "sqrt(" + getdisplay + ")");
+            if (textoBotao(e).equals(sinalButton.getText())) {
+                String sinal = "-";
+                getdisplay = display.getText().replace(sinalButton.getText(), "");
+                subgetdisplay = sinal + getdisplay.substring(getdisplay.length() - 1);
+                getdisplay = getdisplay.substring(0, getdisplay.length() - 1);
+                getdisplay += subgetdisplay;
                 display.setText(getdisplay);
+            }
+            if (textoBotao(e).equals(a1xButton.getText())) {
+                getdisplay = display.getText().replace(a1xButton.getText(), "");
+                subgetdisplay = "1/" + getdisplay.substring(getdisplay.length() - 1);
+                getdisplay = getdisplay.substring(0, getdisplay.length() - 1);
+                getdisplay += subgetdisplay;
+                display.setText(getdisplay);
+            }
+            if (textoBotao(e).equals(powButton.getText())) {
+                getdisplay = display.getText().replace(powButton.getText(), "");
+                getdisplay = getdisplay + "²";
+                display.setText(getdisplay);
+            }
+            if (textoBotao(e).equals(raizButton.getText())) {
+                getdisplay = display.getText().replace(raizButton.getText(), "√");
+                display.setText(getdisplay);
+
 
             }
             if (textoBotao(e).equals(cButton.getText())) {
@@ -108,7 +135,7 @@ public class Botoes extends Interface implements ActionListener {
             if (textoBotao(e).equals(DelButton.getText())) {
                 display.setText(display.getText().replace(DelButton.getText(), ""));
                 i = 1;
-                if (display.getText().contains(getdisplay)) {
+                if (display.getText().equals("sqrt(" + regex + ")")) {
                     display.setText("0");
                 }
                 if (display.getText().isEmpty()) {
@@ -120,17 +147,40 @@ public class Botoes extends Interface implements ActionListener {
             }
             if (textoBotao(e).equals(igualButton.getText())) {
                 getdisplay = display.getText();
-                getdisplay = getdisplay.replace(igualButton.getText(), "");
                 getdisplay = getdisplay.replace(menosButton.getText(), "-");
                 getdisplay = getdisplay.replace(multiButton.getText(), "*");
                 getdisplay = getdisplay.replace(divButton.getText(), "/");
                 getdisplay = getdisplay.replace(virgulaButton.getText(), ".");
                 getdisplay = getdisplay.replace(porcentagemButton.getText(), "/100");
-                if (getdisplay.contains(a1xButton.getText())) {
-                    getdisplay = getdisplay.replace(a1xButton.getText(), "");
-                    getdisplay = getdisplay.replace(getdisplay, "1/" + getdisplay);
+                if (getdisplay.contains("²")) {
+                    getdisplay = getdisplay.replace("²", "");
+                    subgetdisplay = "pow(" + getdisplay.substring(getdisplay.length() - 1) + ",2)";
+                    getdisplay = getdisplay.substring(0, getdisplay.length() - 1);
+                    getdisplay += subgetdisplay;
+                }
+                if (getdisplay.contains("√")) {
+                    while (getdisplay.contains("√")) {
+                        int indexRad = (getdisplay.indexOf("√")); // acha o index de onde está o sinal da raiz
+                        subgetdisplay = getdisplay.substring(indexRad);
+                        for (int j = 0; j < 4;) {
+                            String sinal [] = {"+", "-", "*", "/"};
+                            try {
+                                subgetdisplay = subgetdisplay.substring(0, subgetdisplay.indexOf(sinal[j]));
+                            } catch (StringIndexOutOfBoundsException i) {
+                                j++;
+                            }
+                        }
+                      //  int indexUltimoSinal = (getdisplay.lastIndexOf(maisButton.getText()));
+                     //   getdisplay = getdisplay.replace(getdisplay.charAt(indexUltimoSinal), ')');
+                      //  subgetdisplay = subgetdisplay.replace("√", "");
+                        // subgetdisplay = "sqrt(" + getdisplay.substring(getdisplay.length() - 1) + ")";
+                        //getdisplay += subgetdisplay;
+                        getdisplay = getdisplay.replaceFirst(subgetdisplay, "sqrt(" + subgetdisplay + ")");
+                        getdisplay = getdisplay.replaceFirst("√", "");
+                    }
 
                 }
+                getdisplay = getdisplay.replace(igualButton.getText(), "");
                 System.out.println(getdisplay);
                 jep.parseExpression(getdisplay);
                 if (jep.hasError()) {

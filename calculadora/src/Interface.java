@@ -1,5 +1,5 @@
 import javax.swing.*;
-import org.nfunk.jep.JEP;
+
 public class Interface {
     void criargui() {
         JFrame frame01 = new JFrame("Calculadora");
@@ -13,7 +13,7 @@ public class Interface {
     JButton cButton;
     JButton DelButton;
     JButton a1xButton;
-    JButton sqrButton;
+    JButton powButton;
     JButton raizButton;
     JButton divButton;
     JButton a7Button;
