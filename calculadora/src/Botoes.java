@@ -1,22 +1,20 @@
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.nfunk.jep.*;
 
 public class Botoes extends Interface implements ActionListener {
-    String regex = "\\d+";
 
-    Pattern padrao = Pattern.compile(regex);
+    String[] sinais = {"+", "-", "*", "/"};
+
     int i = 1;
     JEP jep = new JEP();
     String getdisplay;
 
 
 
-    String ultimo;
-    String textoBotao(ActionEvent e){
+
+    String textoBotao(ActionEvent e) {
         String texto = "";
         Object source = e.getSource();
         if (source instanceof JButton botao) {
@@ -25,7 +23,7 @@ public class Botoes extends Interface implements ActionListener {
         return texto;
     }
 
-      Botoes() {
+    Botoes() {
         jep.addStandardFunctions();
         jep.addStandardConstants();
         MCButton.addActionListener(this);
@@ -62,7 +60,7 @@ public class Botoes extends Interface implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String subgetdisplay = "";
+        String subGetDisplay;
         if (display.getText().equals(a0Button.getText()) || display.getText().equals("Erro")) {
             if (textoBotao(e).equals(a1Button.getText())) {
                 display.setText(textoBotao(e));
@@ -100,27 +98,25 @@ public class Botoes extends Interface implements ActionListener {
                 display.setText("0");
             }
 
-        }
-        else {
+        } else {
             display.setText(display.getText() + textoBotao(e));
             if (textoBotao(e).equals(sinalButton.getText())) {
                 String sinal = "-";
                 getdisplay = display.getText().replace(sinalButton.getText(), "");
-                subgetdisplay = sinal + getdisplay.substring(getdisplay.length() - 1);
+                subGetDisplay = sinal + getdisplay.substring(getdisplay.length() - 1);
                 getdisplay = getdisplay.substring(0, getdisplay.length() - 1);
-                getdisplay += subgetdisplay;
+                getdisplay += subGetDisplay;
                 display.setText(getdisplay);
             }
             if (textoBotao(e).equals(a1xButton.getText())) {
                 getdisplay = display.getText().replace(a1xButton.getText(), "");
-                subgetdisplay = "1/" + getdisplay.substring(getdisplay.length() - 1);
+                subGetDisplay = "1/" + getdisplay.substring(getdisplay.length() - 1);
                 getdisplay = getdisplay.substring(0, getdisplay.length() - 1);
-                getdisplay += subgetdisplay;
+                getdisplay += subGetDisplay;
                 display.setText(getdisplay);
             }
             if (textoBotao(e).equals(powButton.getText())) {
-                getdisplay = display.getText().replace(powButton.getText(), "");
-                getdisplay = getdisplay + "²";
+                getdisplay = display.getText().replace(powButton.getText(), "²");
                 display.setText(getdisplay);
             }
             if (textoBotao(e).equals(raizButton.getText())) {
@@ -135,14 +131,13 @@ public class Botoes extends Interface implements ActionListener {
             if (textoBotao(e).equals(DelButton.getText())) {
                 display.setText(display.getText().replace(DelButton.getText(), ""));
                 i = 1;
-                if (display.getText().equals("sqrt(" + regex + ")")) {
+                if (display.getText().equals("sqrt()")) {
                     display.setText("0");
                 }
                 if (display.getText().isEmpty()) {
                     i = 0;
                     display.setText("0");
                 }
-                Matcher matcher = padrao.matcher(display.getText());
                 display.setText(display.getText().substring(0, display.getText().length() - i));
             }
             if (textoBotao(e).equals(igualButton.getText())) {
@@ -152,30 +147,24 @@ public class Botoes extends Interface implements ActionListener {
                 getdisplay = getdisplay.replace(divButton.getText(), "/");
                 getdisplay = getdisplay.replace(virgulaButton.getText(), ".");
                 getdisplay = getdisplay.replace(porcentagemButton.getText(), "/100");
+
                 if (getdisplay.contains("²")) {
-                    getdisplay = getdisplay.replace("²", "");
-                    subgetdisplay = "pow(" + getdisplay.substring(getdisplay.length() - 1) + ",2)";
-                    getdisplay = getdisplay.substring(0, getdisplay.length() - 1);
-                    getdisplay += subgetdisplay;
+                    while (getdisplay.contains("²")) {
+                        getdisplay = getdisplay.replaceFirst("²", "^2");
+                    }
                 }
                 if (getdisplay.contains("√")) {
                     while (getdisplay.contains("√")) {
-                        int indexRad = (getdisplay.indexOf("√")); // acha o index de onde está o sinal da raiz
-                        subgetdisplay = getdisplay.substring(indexRad);
-                        for (int j = 0; j < 4;) {
-                            String sinal [] = {"+", "-", "*", "/"};
+                        int indexRad = getdisplay.indexOf("√"); // acha o index de onde está o sinal da raiz
+                        subGetDisplay = getdisplay.substring(indexRad);
+                        for (int j = 0; j < 4; ) {
                             try {
-                                subgetdisplay = subgetdisplay.substring(0, subgetdisplay.indexOf(sinal[j]));
-                            } catch (StringIndexOutOfBoundsException i) {
+                                subGetDisplay = subGetDisplay.substring(0, subGetDisplay.indexOf(sinais[j]));
+                            } catch (StringIndexOutOfBoundsException e1) {
                                 j++;
                             }
                         }
-                      //  int indexUltimoSinal = (getdisplay.lastIndexOf(maisButton.getText()));
-                     //   getdisplay = getdisplay.replace(getdisplay.charAt(indexUltimoSinal), ')');
-                      //  subgetdisplay = subgetdisplay.replace("√", "");
-                        // subgetdisplay = "sqrt(" + getdisplay.substring(getdisplay.length() - 1) + ")";
-                        //getdisplay += subgetdisplay;
-                        getdisplay = getdisplay.replaceFirst(subgetdisplay, "sqrt(" + subgetdisplay + ")");
+                        getdisplay = getdisplay.replaceFirst(subGetDisplay, "sqrt(" + subGetDisplay + ")");
                         getdisplay = getdisplay.replaceFirst("√", "");
                     }
 
@@ -187,8 +176,7 @@ public class Botoes extends Interface implements ActionListener {
                     display.setText("Erro");
                     System.out.println(jep.getErrorInfo());
 
-                }
-                else {
+                } else {
                     System.out.println(jep.getValue());
                     double resultado = jep.getValue();
                     String strResul = Double.toString(resultado);
@@ -199,6 +187,7 @@ public class Botoes extends Interface implements ActionListener {
 
         }
     }
+}
 
 
 /*
@@ -238,4 +227,3 @@ public class Botoes extends Interface implements ActionListener {
 
 
 */
-}
